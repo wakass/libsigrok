@@ -94,6 +94,12 @@ static const struct hantek_6xxx_profile dev_profiles[] = {
 		"YiXingDianZi", "MDSO", "fx2lafw-yixingdianzi-mdso.fw",
 		ARRAY_AND_SIZE(dc_coupling), FALSE,
 	},
+	{
+		0xd4a2, 0x5661, 0x1d50, 0x608e, 0x0005,
+		"Instrustar", "ISDS205A", "fx2lafw-instrustar-isds-205a.fw",
+		ARRAY_AND_SIZE(acdc_coupling), FALSE,
+	},
+
 	ALL_ZERO
 };
 
