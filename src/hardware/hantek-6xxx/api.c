@@ -97,7 +97,7 @@ static const struct hantek_6xxx_profile dev_profiles[] = {
 	{
 		0xd4a2, 0x5661, 0x1d50, 0x608e, 0x0005,
 		"Instrustar", "ISDS205A", "fx2lafw-instrustar-isds-205a.fw",
-		ARRAY_AND_SIZE(acdc_coupling), FALSE,
+		ARRAY_AND_SIZE(acdc_coupling), TRUE,
 	},
 
 	ALL_ZERO
@@ -450,6 +450,8 @@ static int config_set(uint32_t key, GVariant *data,
 						devc->coupling_tab_size)) < 0)
 				return SR_ERR_ARG;
 			devc->coupling[ch_idx] = idx;
+			hantek_6xxx_update_coupling(sdi);
+
 			break;
 		default:
 			return SR_ERR_NA;
@@ -483,8 +485,9 @@ static int config_list(uint32_t key, GVariant **data,
 			*data = std_gvar_array_u32(ARRAY_AND_SIZE(devopts_cg));
 			break;
 		case SR_CONF_COUPLING:
-			if (!devc)
+			if (!devc) {
 				return SR_ERR_ARG;
+			}
 			*data = g_variant_new_strv(devc->coupling_vals, devc->coupling_tab_size);
 			break;
 		case SR_CONF_VDIV:
